@@ -2,15 +2,15 @@
   <main class="accounts">
     <header class="accounts__header">
       <h1 class="accounts__title">Учетные записи</h1>
-      <AButton class="accounts__add-btn" type="primary">
+      <a-button @click="createAccountForm" class="accounts__add-btn" type="primary">
         <PlusOutlined />
-      </AButton>
+      </a-button>
     </header>
 
     <section class="accounts__content">
       <div class="accounts__list">
-        <AccountList/>
-        <p class="accounts__empty-message">Список учетных записей пуст</p>
+        <AccountList @deleteForm="deleteAccountForm" v-if="accounts.length" :accounts="accounts"/>
+        <p v-else class="accounts__empty-message">Список учетных записей пуст</p>
       </div>
     </section>
   </main>
@@ -19,6 +19,25 @@
 <script setup lang="ts">
 import {PlusOutlined} from '@ant-design/icons-vue'
 import AccountList from "./components/AccountList/AccountList.vue";
+import {ref} from "vue";
+import type {Account} from "./types/accounts.type.ts";
+
+const accounts = ref<Account[]>([])
+
+const createAccountForm = () => {
+  accounts.value.push({
+    id: Date.now(),
+    label: '',
+    type: 'Локальная',
+    login: '',
+    password: ''
+  })
+}
+
+const deleteAccountForm = (id: number) => {
+  accounts.value = accounts.value.filter(account => account.id !== id)
+}
+
 </script>
 
 <style scoped lang="scss">

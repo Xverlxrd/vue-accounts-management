@@ -12,28 +12,48 @@
     </header>
 
     <ul class="account-list__items">
-      <li class="account-list__item">
+      <li v-for="account in accounts" :key="account.id" class="account-list__item">
         <div class="account-list__field account-list__field--label">
-          <a-input placeholder="Введите метку" class="account-list__input"/>
+          <a-input
+              v-model:value="account.label"
+              placeholder="Введите метку"
+              class="account-list__input"
+          />
         </div>
 
         <div class="account-list__field account-list__field--type">
-          <a-select class="account-list__select" placeholder="Выберите тип">
+          <a-select
+              v-model:value="account.type"
+              class="account-list__select"
+              placeholder="Выберите тип"
+          >
             <a-select-option value="local">Локальная</a-select-option>
             <a-select-option value="ldap">LDAP</a-select-option>
           </a-select>
         </div>
 
         <div class="account-list__field account-list__field--login">
-          <a-input placeholder="Введите логин" class="account-list__input"/>
+          <a-input
+              v-model:value="account.login"
+              placeholder="Введите логин"
+              class="account-list__input"
+          />
         </div>
 
         <div class="account-list__field account-list__field--password">
-          <a-input-password placeholder="Введите пароль" class="account-list__input"/>
+          <a-input-password
+              v-model:value="account.password"
+              placeholder="Введите пароль"
+              class="account-list__input"
+          />
         </div>
 
         <div class="account-list__field account-list__field--actions">
-          <a-button type="primary" danger class="account-list__button">
+          <a-button
+              @click="$emit('deleteForm', account.id)"
+              type="primary"
+              danger
+              class="account-list__button">
             Удалить
           </a-button>
         </div>
@@ -45,6 +65,13 @@
 <script setup lang="ts">
 import AccountLabelColumn from "../AccountLabelColumn/AccountLabelColumn.vue";
 import {ACCOUNT_LABELS} from "../../constants/accountLabels.const.ts";
+import type {Account} from "../../types/accounts.type.ts";
+
+defineProps<{
+  accounts: Account[]
+}>()
+
+defineEmits(['deleteForm'])
 </script>
 
 <style scoped lang="scss">
