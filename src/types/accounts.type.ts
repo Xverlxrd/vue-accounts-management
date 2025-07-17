@@ -1,9 +1,13 @@
-type AccountsType = 'Локальная' | 'LDAP'
+type AccountType = 'Локальная' | 'LDAP'
 
 export interface Account {
     id: number,
     label?: string,
-    type: AccountsType,
+    type: AccountType,
     login: string,
     password: string
+}
+
+export interface StoredAccount extends Omit<Account, 'label'> {
+    label: Array<{ text: string }>
 }
