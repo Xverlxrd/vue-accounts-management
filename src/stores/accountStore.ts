@@ -48,7 +48,7 @@ export const useAccountsStore = defineStore('account', () => {
         accounts.value.push({
             id: Date.now(),
             label: '',
-            type: 'Локальная',
+            type: 'local',
             login: '',
             password: ''
         })
